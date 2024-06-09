@@ -1,4 +1,5 @@
 import { useState, FC } from "react";
+import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { createUser } from "../api/apiUrl";
 import { RegisterFormValues, RegisterFormProps } from "../utils/interface";
@@ -9,6 +10,7 @@ import Swal from "sweetalert2";
 const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (values: RegisterFormValues) => {
     setIsLoading(true);
@@ -22,6 +24,10 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
         text: "User registered successfully!",
         icon: "success",
         confirmButtonText: "OK",
+      }).then((response) => {
+        if (response.isConfirmed) {
+          navigate("/user");
+        }
       });
     } catch (error) {
       console.error("Failed to create user:", error);
@@ -56,8 +62,8 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border border-gray-300 rounded-md shadow-md">
-      <h2 className="text-2xl font-bold mb-6">Register</h2>
+    <div className="w-80 bg-white  mx-auto mt-10 p-6 border border-gray-300 rounded-md shadow-md">
+      <h2 className="text-3xl font-bold mb-6">Register</h2>
       <form onSubmit={formik.handleSubmit}>
         {isLoading && <Loading />}
         <div className="mb-4">
@@ -131,7 +137,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
             />
             <button
               type="button"
-              className="absolute inset-y-0 right-0 px-3 py-0 flex items-center"
+              className="absolute bg-transparent inset-y-0 right-0 px-3 py-0 flex items-center"
               onClick={togglePasswordVisibility}
             >
               {showPassword ? "Hide" : "Show"}
@@ -146,7 +152,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
 
         <button
           type="submit"
-          className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
+          className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md cursor-pointer"
           disabled={!formik.dirty || !formik.isValid || isLoading}
         >
           Register

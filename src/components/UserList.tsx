@@ -16,8 +16,8 @@ const UserList = () => {
   };
 
   return (
-    <div className="w-screen min-h-screen pt-20 ">
-      <table className="w-3/4 mx-auto mt-6 text-center border-collapse border border-gray-800">
+    <div className="w-screen min-h-screen pt-32 ">
+      <table className="w-3/4 mx-auto mt-6 text-left border-collapse border border-gray-800">
         <thead>
           <tr className="bg-gray-800 text-white">
             <th className="p-4">Name</th>
