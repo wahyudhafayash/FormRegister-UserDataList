@@ -4,6 +4,7 @@ export const registerSchema = Validate.object({
   name: Validate.string()
     .min(8, "Username must be at least 8 characters")
     .required("Username is required"),
+
   email: Validate.string()
     .email("Invalid email address")
     .required("Email is required"),

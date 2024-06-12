@@ -12,52 +12,41 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: RegisterFormValues) => {
-    setIsLoading(true);
-    try {
-      await createUser(values);
-      if (onSuccess) {
-        onSuccess();
-      }
-      Swal.fire({
-        title: "Success",
-        text: "User registered successfully!",
-        icon: "success",
-        confirmButtonText: "OK",
-      }).then((response) => {
-        if (response.isConfirmed) {
-          navigate("/user");
-        }
-      });
-    } catch (error) {
-      console.error("Failed to create user:", error);
-      Swal.fire({
-        title: "Error",
-        text: "Failed to register user",
-        icon: "error",
-        confirmButtonText: "OK",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const initialValues: RegisterFormValues = {
     name: "",
     email: "",
     password: "",
-    username: "",
   };
 
   const formik = useFormik({
     initialValues,
     validationSchema: registerSchema,
-    onSubmit: (values) => {
-      handleSubmit(values);
+    onSubmit: async (values) => {
+      await createUser(values)
+        .then(() => {
+          Swal.fire({
+            title: "Success",
+            text: "User registered successfully!",
+            icon: "success",
+            confirmButtonText: "OK",
+          }).then((response) => {
+            if (response.isConfirmed) {
+              navigate("/user");
+            }
+          });
+        })
+        .catch(() => {
+          Swal.fire({
+            title: "Error",
+            text: "Failed to register user",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+        });
     },
   });
 
-  const togglePasswordVisibility = () => {
+  const togglePassword = () => {
     setShowPassword(!showPassword);
   };
 
@@ -66,6 +55,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
       <h2 className="text-3xl font-bold mb-6">Register</h2>
       <form onSubmit={formik.handleSubmit}>
         {isLoading && <Loading />}
+
         <div className="mb-4">
           <label
             htmlFor="name"
@@ -138,7 +128,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
             <button
               type="button"
               className="absolute bg-transparent inset-y-0 right-0 px-3 py-0 flex items-center"
-              onClick={togglePasswordVisibility}
+              onClick={togglePassword}
             >
               {showPassword ? "Hide" : "Show"}
             </button>
@@ -152,7 +142,7 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSuccess }) => {
 
         <button
           type="submit"
-          className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md cursor-pointer"
+          className="w-full px-4 py-2 bg-black hover:bg-gray-800 text-white rounded-md cursor-pointer"
           disabled={!formik.dirty || !formik.isValid || isLoading}
         >
           Register

@@ -11,7 +11,16 @@ export interface UserListProps {
 
 export interface RegisterFormValues {
   name: string | number | readonly string[] | undefined;
-  username: string;
+
   email: string;
   password: string;
+}
+
+export interface InputProps {
+  id: string;
+  type: string;
+  name: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
 }

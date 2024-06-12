@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": "2045",
+      "name": "Muhammad Fayash Wahyudha",
+      "email": "fayash@example.com",
+      "password": "Fayash*1"
+    },
+    {
+      "id": "f5f1",
+      "name": "lukas Jiun",
+      "email": "lukas@example.com",
+      "password": "Lukasjiun*7"
+    },
+    {
+      "id": "c5a4",
+      "name": "Ayah Gamy",
+      "email": "gamsky@example.com",
+      "password": "AyahGamy*9"
+    },
+    {
+      "id": "b73d",
+      "name": "daffascript",
+      "email": "daffascript@example.com",
+      "password": "Daffasckr*11"
+    },
+    {
+      "id": "3bc5",
+      "name": "davi p balap",
+      "email": "pbalap@example.com",
+      "password": "Gasbalapbrok*1"
+    }
+  ]
+}
